@@ -62,7 +62,12 @@ export const configSlice = createSlice({
 
                 const object = state.boxes[state.currentColumn].map((x, i) => ({
                     key: x,
-                    status: x == state.correctAnswer[i] ? "correct" : "wrong",
+                    status:
+                        x == state.correctAnswer[i]
+                            ? "correct"
+                            : state.correctAnswer.includes(x)
+                            ? "incorrect-place"
+                            : "wrong",
                 }));
 
                 state.trackKey = [...state.trackKey, ...object];
