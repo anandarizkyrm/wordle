@@ -1,16 +1,39 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { handleClickKey } from "../../redux/slice/wordle";
+import { RootState } from "../../redux/store";
 
-type Props = {
-    correctAnswer?: string;
-    boxes: string[][];
-    activeResultRowAnswer: number;
-};
+const Board = () => {
+    const dispatch = useDispatch();
+    const activeResultRowAnswer = useSelector(
+        (state: RootState) => state.wordle.activeResultRowAnswer
+    );
+    const boxes = useSelector((state: RootState) => state.wordle.boxes);
+    const correctAnswer = useSelector(
+        (state: RootState) => state.wordle.correctAnswer
+    );
+    const isGameOver = useSelector(
+        (state: RootState) => state.wordle.isGameOver
+    );
+    const currentColumn = useSelector(
+        (state: RootState) => state.wordle.currentColumn
+    );
+    const currentRow = useSelector(
+        (state: RootState) => state.wordle.currentRow
+    );
 
-const Board = ({
-    correctAnswer = "hello",
-    boxes,
-    activeResultRowAnswer,
-}: Props) => {
+    useEffect(() => {
+        const handleKeyDown = (event: any) => {
+            dispatch(handleClickKey(event.key));
+        };
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [boxes, currentColumn, currentRow, isGameOver]);
     return (
         <div style={{ width: "100%", maxWidth: "300px" }}>
             {boxes.map((item, i) => (
