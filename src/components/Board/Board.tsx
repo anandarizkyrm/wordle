@@ -46,6 +46,8 @@ const Board = () => {
                                     i <= activeResultRowAnswer
                                         ? item == correctAnswer[idx]
                                             ? "green"
+                                            : correctAnswer.includes(item)
+                                            ? "yellow"
                                             : "gray"
                                         : "transparent"
                                 }`,

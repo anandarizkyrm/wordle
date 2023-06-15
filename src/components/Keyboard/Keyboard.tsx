@@ -26,6 +26,12 @@ const Keyboard = () => {
                     : trackKey.some(
                           (x) =>
                               Object.values(x).includes(letter) &&
+                              Object.values(x).includes("incorrect-place")
+                      )
+                    ? "yellow"
+                    : trackKey.some(
+                          (x) =>
+                              Object.values(x).includes(letter) &&
                               Object.values(x).includes("wrong")
                       )
                     ? "gray"
